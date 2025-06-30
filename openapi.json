@@ -1,0 +1,112 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Product Reviews Summarizer API",
+    "description": "API for summarizing product reviews.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://619283-794gainsborozebra-stage.adobeioruntime.net"
+    }
+  ],
+  "paths": {
+    "/api/v1/web/product-reviews-summarizer/reviews-api": {
+      "get": {
+        "summary": "Fetch product review summary",
+        "description": "Retrieves a summary of reviews for a specific product.",
+        "parameters": [
+          {
+            "name": "storeCode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "gb"
+            },
+            "description": "The store code for the product."
+          },
+          {
+            "name": "sku",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "4051474"
+            },
+            "description": "The SKU of the product."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with product review summary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "product": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 2924
+                        },
+                        "sku": {
+                          "type": "string",
+                          "example": "4051474"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Costa Latte"
+                        }
+                      }
+                    },
+                    "summary": {
+                      "type": "string",
+                      "description": "JSON string containing the review summary.",
+                      "example": "{\n  \"summary\": \"The Costa Latte is highly appreciated by customers for its great taste, strength, and consistency...\",\n  \"pros\": [\"Great taste and strength\", \"Consistent quality\"],\n  \"cons\": [\"May be overpriced for some\"],\n  \"pattern\": \"Most customers enjoy the taste and quality...\",\n  \"score\": \"4.7/5\",\n  \"punchLine\": \"<strong>Great start</strong> to the day...\"\n}"
+                    },
+                    "reviewCount": {
+                      "type": "integer",
+                      "example": 10
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "averageScore": {
+                          "type": "number",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "totalReviews": {
+                          "type": "integer",
+                          "example": 10
+                        }
+                      }
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-04-28T10:00:30.421Z"
+                    },
+                    "processId": {
+                      "type": "string",
+                      "example": "a0e22c08-e3e2-4250-990b-30fb667c73b9"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Missing or invalid parameters."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    }
+  }
+}

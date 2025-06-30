@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "actions",
+    "rootDir": "./actions-src",
+    "resolveJsonModule": true
+  },
+  "include": ["./actions-src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
