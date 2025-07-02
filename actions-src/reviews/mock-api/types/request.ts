@@ -6,6 +6,7 @@ import { BaseParams, DataParams } from "../../../types/request";
  */
 export interface ReviewRequest {
   productId: string;
+  productSku: string;
   page?: string;
   perPage?: string;
   sort?: string;
@@ -15,6 +16,9 @@ export interface ReviewRequest {
 
 export interface GraphqlClientParams {
   GC_CLIENT_ID_REVIEW: string;
+  GC_CLIENT_ID_REVIEW_GB?: string;
+  GC_CLIENT_ID_REVIEW_DE?: string;
+  GC_CLIENT_ID_REVIEW_ES?: string;
   GC_GRAPHQL_ENDPOINT: string;
 }
 

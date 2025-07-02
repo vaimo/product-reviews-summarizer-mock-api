@@ -12,6 +12,9 @@ application:
               LOG_LEVEL: debug
               GC_GRAPHQL_ENDPOINT: $GC_GRAPHQL_ENDPOINT
               GC_CLIENT_ID_REVIEW: $GC_CLIENT_ID_REVIEW
+              GC_CLIENT_ID_REVIEW_GB: $GC_CLIENT_ID_REVIEW_GB
+              GC_CLIENT_ID_REVIEW_DE: $GC_CLIENT_ID_REVIEW_DE
+              GC_CLIENT_ID_REVIEW_ES: $GC_CLIENT_ID_REVIEW_ES
             annotations:
               require-adobe-auth: false
               final: true

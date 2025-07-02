@@ -5,21 +5,37 @@ import { GraphqlClientParams } from "./types/request";
 const logger = Core.Logger("commerce-graphql-client", { level: "info" });
 
 interface GraphQLResponse {
-  data: any;
-  errors?: any;
+  data: unknown;
+  errors?: Array<{ message: string; [key: string]: unknown }>;
+}
+
+/**
+ * Selects the appropriate client ID based on the store code
+ */
+function getClientIdForStore(storeCode: string | undefined, params: GraphqlClientParams): string {
+  if (!storeCode) {
+    return params.GC_CLIENT_ID_REVIEW;
+  }
+
+  switch (storeCode.toUpperCase()) {
+    case 'GB':
+      return params.GC_CLIENT_ID_REVIEW_GB || params.GC_CLIENT_ID_REVIEW;
+    case 'DE':
+      return params.GC_CLIENT_ID_REVIEW_DE || params.GC_CLIENT_ID_REVIEW;
+    case 'ES':
+      return params.GC_CLIENT_ID_REVIEW_ES || params.GC_CLIENT_ID_REVIEW;
+    default:
+      return params.GC_CLIENT_ID_REVIEW;
+  }
 }
 
 async function executeGraphQL(
   query: string,
-  variables: Record<string, any>,
+  variables: Record<string, unknown>,
   params: GraphqlClientParams,
   additionalHeaders?: Record<string, string>
-): Promise<any> {
+): Promise<unknown> {
   const endpoint = params.GC_GRAPHQL_ENDPOINT;
-
-  if (!endpoint || !params.GC_CLIENT_ID_REVIEW) {
-    throw new Error("Missing Commerce GraphQL endpoint data");
-  }
 
   try {
     const headers = {
@@ -45,13 +61,16 @@ async function executeGraphQL(
     }
 
     return result.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     logger.error("Error executing GraphQL query: " + String(error));
-    if (error.response) {
-      logger.error("Error response: " + JSON.stringify(error.response.data));
+    if (error instanceof Error && 'response' in error) {
+      const axiosError = error as { response?: { data: unknown } };
+      if (axiosError.response) {
+        logger.error("Error response: " + JSON.stringify(axiosError.response.data));
+      }
     }
-    throw new Error(`Failed to execute GraphQL query: ${error.message}`);
+    throw new Error(`Failed to execute GraphQL query: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 
-export { executeGraphQL };
+export { executeGraphQL, getClientIdForStore };

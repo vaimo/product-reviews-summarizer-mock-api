@@ -37,10 +37,12 @@ The action accepts the following parameters:
 {
   data: {
     productId: string;     // Required: Product identifier
+    productSku: string;    // Required: Product SKU
     page?: number;         // Optional: Page number (default: 1)
     perPage?: number;      // Optional: Items per page (default: 10)
     sort?: string;         // Optional: Sort field
     direction?: string;    // Optional: Sort direction (asc/desc)
+    storeCode?: string     // Optional: Store Code
   }
 }
 ```
@@ -50,11 +52,13 @@ The action accepts the following parameters:
 ```json
 {
   "data": {
+    "productId": "12343",
     "productId": "product-123",
     "page": 1,
     "perPage": 20,
     "sort": "createdAt",
-    "direction": "desc"
+    "direction": "desc",
+    "storeCode": "gb"
   }
 }
 ```

@@ -23,5 +23,5 @@ export enum HttpStatus {
 
 export interface AppResponse {
   statusCode: HttpStatus;
-  body: any;
+  body: unknown;
 }

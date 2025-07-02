@@ -1,5 +1,5 @@
 import { ReviewsResponse } from "../../types/review";
-import { executeGraphQL } from "./graphql-client";
+import { executeGraphQL, getClientIdForStore } from "./graphql-client";
 import { GraphqlClientParams } from "./types/request";
 
 interface ProductReviewsGraphQLResponse {
@@ -98,13 +98,16 @@ export async function fetchReviewsForProduct(
   const direction = options.direction || "desc";
   const storeCode = options.storeCode;
 
+  // Get the appropriate client ID based on store code
+  const clientId = getClientIdForStore(storeCode, params);
+
   const variables = {
     productId: productIdString,
     perPage: perPage,
     page: page,
     sort: sort,
     direction: direction,
-    clientId: params.GC_CLIENT_ID_REVIEW,
+    clientId: clientId,
     operationName: "ProductReviews",
   };
 
