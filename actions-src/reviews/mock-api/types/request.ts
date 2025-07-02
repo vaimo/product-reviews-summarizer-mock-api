@@ -10,6 +10,7 @@ export interface ReviewRequest {
   perPage?: string;
   sort?: string;
   direction?: string;
+  storeCode?: string;
 }
 
 export interface GraphqlClientParams {

@@ -13,6 +13,7 @@ export async function main(params: MockFunctionParams): Promise<AppResponse> {
       perPage: params.data.perPage,
       sort: params.data.sort,
       direction: params.data.direction,
+      storeCode: params.data.storeCode,
     });
 
     return {

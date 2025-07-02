@@ -12,7 +12,8 @@ interface GraphQLResponse {
 async function executeGraphQL(
   query: string,
   variables: Record<string, any>,
-  params: GraphqlClientParams
+  params: GraphqlClientParams,
+  additionalHeaders?: Record<string, string>
 ): Promise<any> {
   const endpoint = params.GC_GRAPHQL_ENDPOINT;
 
@@ -23,6 +24,7 @@ async function executeGraphQL(
   try {
     const headers = {
       "Content-Type": "application/json",
+      ...(additionalHeaders || {}),
     };
 
     const response = await axios({
